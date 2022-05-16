@@ -1,11 +1,10 @@
 package com.pluralsight.springdemo.models;
 
 import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
-import java.util.List;
 
-@Entity(name = "speakers")
+@Entity
+@Table(name = "speakers")
 public class Speaker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +14,6 @@ public class Speaker {
     private String title;
     private String company;
     private String speaker_bio;
-
-    @ManyToMany(mappedBy = "speakers")
-    private List<Session> sessions;
 
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
@@ -33,14 +29,6 @@ public class Speaker {
 
     public void setSpeaker_photo(byte[] speaker_photo) {
         this.speaker_photo = speaker_photo;
-    }
-
-    public List<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(List<Session> sessions) {
-        this.sessions = sessions;
     }
 
     public Long getSpeaker_id() {

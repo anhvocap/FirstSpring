@@ -1,17 +1,22 @@
 package com.pluralsight.springdemo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name = "sessions")
+@Entity
+@Table(name = "sessions")
 public class Session {
     @Id
+    @Column(name = "session_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long session_id;
+
+    @Column(name = "session_name")
     private String session_name;
+
+    @Column(name = "session_description")
     private String session_description;
+
+    @Column(name = "session_length")
     private Integer session_length;
 
     public Session() {
@@ -49,5 +54,4 @@ public class Session {
     public void setSession_length(Integer session_length) {
         this.session_length = session_length;
     }
-
 }
