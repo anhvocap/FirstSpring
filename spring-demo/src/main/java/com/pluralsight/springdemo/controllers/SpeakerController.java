@@ -1,6 +1,5 @@
 package com.pluralsight.springdemo.controllers;
 
-import com.pluralsight.springdemo.models.Session;
 import com.pluralsight.springdemo.models.Speaker;
 import com.pluralsight.springdemo.repositories.SpeakerRepository;
 import org.springframework.beans.BeanUtils;

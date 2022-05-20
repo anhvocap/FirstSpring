@@ -17,9 +17,7 @@ public class SessionController {
 
     @GetMapping
     public List<Session> list() {
-        System.out.println("------------");
         List<Session> lstSession = sessionRepository.findAll();
-        System.out.println("lstSession:" + lstSession);
         return lstSession;
     }
 
