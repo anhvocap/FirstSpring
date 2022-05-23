@@ -30,6 +30,7 @@ public class SessionController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Session create(@RequestBody final Session session) {
+        System.out.println("session:" + session.getSession_id() + "-" + session.getSession_name() + "-");
         return sessionRepository.saveAndFlush(session);
     }
 
