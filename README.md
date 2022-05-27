@@ -37,3 +37,14 @@ https://app.pluralsight.com/course-player?clipId=b7bc9b61-098a-4bcc-84db-bee5101
 # Spring Framework: Overview of Spring Data
 - Main modules: JPA, JDBC, MongoDB, Cassandra, Spring Data n
 - Community modules: CouchBase, ElasticSearch, Hazelcast, Neo4j, Spring Data n
+
+# ACID Transactional: Atomic, Consistent, Isolated, Durable
+- Atomic: it either all happens or does not happen at all
+- Consistent: the data written is valid according to the various contraints
+- Isolated: other transactions can not see the result until the transaction is committed
+- Durable: the results of the transaction are written to disk
+
+# Spring Data: 
+- Repository + Query Generation
+- Spring Data Commons: Spring Data JPA, Spring JDBC, Spring Data KeyValue, Spring Data CouchBase, Spring Data Ne04j, Spring Data LDAP, Spring Data MongoDB, Spring Data Redis, Spring Data Hazelcast, Spring Data DynamoDB
+
