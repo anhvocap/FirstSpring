@@ -29,10 +29,11 @@ public class SpeakerRepository {
     }
 
     public Speaker find(Long id) {
+        System.out.println("id:" + id);
         return entityManager.find(Speaker.class, id);
     }
 
     public List<Speaker> list() {
-        return entityManager.createQuery("select s.* from speakers s").getResultList();
+        return entityManager.createNativeQuery("SELECT s.* from Speakers s").getResultList();
     }
 }

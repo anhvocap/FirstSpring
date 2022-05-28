@@ -29,6 +29,7 @@ public class SessionRepository {
     }
 
     public Session find(Long id) {
+        System.out.println(Session.class);
         return entityManager.find(Session.class, id);
     }
 

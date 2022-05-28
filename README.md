@@ -35,6 +35,7 @@ https://app.pluralsight.com/course-player?clipId=b7bc9b61-098a-4bcc-84db-bee5101
 - ms azure
 
 # Spring Framework: Overview of Spring Data
+- https://github.com/dlbunker/ps-first-spring-boot-app
 - Main modules: JPA, JDBC, MongoDB, Cassandra, Spring Data n
 - Community modules: CouchBase, ElasticSearch, Hazelcast, Neo4j, Spring Data n
 
@@ -44,7 +45,6 @@ https://app.pluralsight.com/course-player?clipId=b7bc9b61-098a-4bcc-84db-bee5101
 - Isolated: other transactions can not see the result until the transaction is committed
 - Durable: the results of the transaction are written to disk
 
-# Spring Data: 
-- Repository + Query Generation
+# Spring Data: Repository + Query Generation
+- https://github.com/dlbunker/ps-spring-data-jpa
 - Spring Data Commons: Spring Data JPA, Spring JDBC, Spring Data KeyValue, Spring Data CouchBase, Spring Data Ne04j, Spring Data LDAP, Spring Data MongoDB, Spring Data Redis, Spring Data Hazelcast, Spring Data DynamoDB
-
