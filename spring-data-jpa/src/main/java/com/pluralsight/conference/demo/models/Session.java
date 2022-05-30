@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "Session")
 @Table(name = "sessions")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Session {
@@ -23,19 +23,16 @@ public class Session {
     @Column(name = "session_length")
     private Integer sessionLength;
 
-    /*
     @ManyToMany
     @JoinTable(
             name = "session_speakers",
             joinColumns = @JoinColumn(name = "session_id"),
             inverseJoinColumns = @JoinColumn(name = "speaker_id"))
     private List<Speaker> speakers;
-    */
 
     public Session() {
     }
 
-    /*
     public List<Speaker> getSpeakers() {
         return speakers;
     }
@@ -43,7 +40,6 @@ public class Session {
     public void setSpeakers(List<Speaker> speakers) {
         this.speakers = speakers;
     }
-    */
 
     public Long getSessionId() {
         return sessionId;

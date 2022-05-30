@@ -4,6 +4,7 @@ import com.pluralsight.conference.demo.repositories.SpeakerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,8 +24,19 @@ public class SpeakerTest {
     @Test
     public void testFind() throws Exception {
         Speaker speaker = repository.find(1L);
-        System.out.println("speaker:" + speaker);
         assertNotNull(speaker);
+    }
+
+    @Test
+    public void testList() throws Exception {
+        List<Speaker> speakers = repository.list();
+        assertNotNull(speakers);
+    }
+
+    @Test
+    public void testListByNativeQuery() throws Exception {
+        List<Speaker> speakers = repository.listByNativeQuery();
+        assertNotNull(speakers);
     }
 
     @Test

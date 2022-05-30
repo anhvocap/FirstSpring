@@ -65,7 +65,5 @@ public class TicketPrice {
         return pricingCategory;
     }
 
-    public void setPricingCategory(PricingCategory pricingCategory) {
-        this.pricingCategory = pricingCategory;
-    }
+    public void setPricingCategory(PricingCategory pricingCategory) { this.pricingCategory = pricingCategory; }
 }

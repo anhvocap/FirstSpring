@@ -2,19 +2,22 @@ package com.pluralsight.conference.demo.config;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.sql.DataSource;
+
 import org.hibernate.dialect.Oracle12cDialect;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 
 @Configuration
 public class JpaConfiguration {
@@ -48,7 +51,6 @@ public class JpaConfiguration {
         System.out.println("getDataSource() bean has been initialized...");
         return dataSource;
     }
-
 
     @Bean
     public Map<String, Object> jpaProperties() {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Repository
 public class SessionRepository {
@@ -29,16 +30,19 @@ public class SessionRepository {
     }
 
     public Session find(Long id) {
-        System.out.println(Session.class);
         return entityManager.find(Session.class, id);
     }
 
     public List<Session> list() {
+        List<Session> sessions = entityManager.createQuery("select s from Session s", Session.class).getResultList();
+        return sessions;
+    }
+
+    public List<Session> listByNativeQuery() {
         return entityManager.createNativeQuery("SELECT * FROM Sessions").getResultList();
     }
 
     public List<Session> getSessionsThatHaveName(String name) {
-        //System.out.println("name:" + name);
         List<Session> ses = entityManager
                 .createNativeQuery("SELECT * FROM Sessions s WHERE UPPER(s.session_name) LIKE UPPER(:name)")
                 .setParameter("name", "%" + name + "%").getResultList();
