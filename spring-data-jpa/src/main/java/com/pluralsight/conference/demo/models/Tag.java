@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Tag")
+@Table(name = "Tags")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")
-    private int tagId;
+    private long tagId;
 
     @Column(name = "description")
     private String description;
@@ -19,7 +19,7 @@ public class Tag {
     public Tag () {
     }
 
-    public int getTagId() {
+    public long getTagId() {
         return tagId;
     }
 
