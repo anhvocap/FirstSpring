@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,4 +49,20 @@ public class SessionTest {
         assertTrue(sessions.size() > 0);
     }*/
 
+    @Test
+    @Transactional
+    public void testSaveAndGetAndDelete() throws Exception {
+        Session s1 = new Session();
+        s1.setSessionName("Meeting 2022");
+        s1.setSessionDescription("Preparation Meeting in 2022");
+        s1.setSessionLength(65);
+        s1 = sessionRepository.saveAndFlush(s1);
+
+        entityManager.clear();
+
+        Session s2 = sessionRepository.getOne(s1.getSessionId());
+        assertEquals("Meeting 2022", s2.getSessionName());
+
+        sessionRepository.deleteById(s2.getSessionId());
+    }
 }
