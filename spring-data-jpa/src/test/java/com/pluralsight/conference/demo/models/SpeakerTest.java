@@ -1,6 +1,6 @@
 package com.pluralsight.conference.demo.models;
 
-import com.pluralsight.conference.demo.repositories.SpeakerRepository;
+import com.pluralsight.conference.demo.repositories.ISpeakerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,47 +16,44 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 public class SpeakerTest {
     @Autowired
-    private SpeakerRepository repository;
+    private ISpeakerRepository repository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Test
     public void testFind() throws Exception {
-        Speaker speaker = repository.find(1L);
+        Speaker speaker = repository.getById(1L);
+
         assertNotNull(speaker);
+        assertEquals(1, speaker.getSpeakerId());
     }
 
     @Test
     public void testList() throws Exception {
-        List<Speaker> speakers = repository.list();
+        List<Speaker> speakers = repository.findAll();
         assertNotNull(speakers);
-    }
-
-    @Test
-    public void testListByNativeQuery() throws Exception {
-        List<Speaker> speakers = repository.listByNativeQuery();
-        assertNotNull(speakers);
+        assert (speakers.size()) >= 1;
     }
 
     @Test
     @Transactional
     public void testSaveAndGetAndDelete() throws Exception {
         Speaker s = new Speaker();
-        s.setCompany("Pluralsight");
         s.setFirstName("Dan");
         s.setLastName("Bunker");
         s.setTitle("Author");
+        s.setCompany("Pluralsight");
         s.setSpeakerBio("Consulting and mentoring");
-        s = repository.create(s);
+        Speaker s1 = repository.saveAndFlush(s);
 
         // clear the persistence context so we don't return the previously cached location object
         // this is a test only thing and normally doesn't need to be done in prod code
         entityManager.clear();
 
-        Speaker otherSpeaker = repository.find(s.getSpeakerId());
+        Speaker otherSpeaker = repository.getOne(s.getSpeakerId());
         assertEquals("Dan", otherSpeaker.getFirstName());
 
-        repository.delete(otherSpeaker.getSpeakerId());
+        repository.deleteById(otherSpeaker.getSpeakerId());
     }
 }

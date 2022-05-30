@@ -5,13 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "Speakers")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Speaker implements Serializable {
+public class Speaker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "speaker_id")
