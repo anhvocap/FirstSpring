@@ -31,7 +31,7 @@ CREATE TABLE pricing_categories
 DROP TABLE ticket_prices;
 CREATE TABLE ticket_prices
 (
-    ticket_price_id       INT PRIMARY KEY,
+    ticket_price_id       INTEGER PRIMARY KEY,
     ticket_type_code      VARCHAR(1)    NOT NULL,
     pricing_category_code VARCHAR(1)    NOT NULL,
     base_price            NUMERIC(8, 2) NOT NULL
@@ -70,10 +70,10 @@ CREATE TABLE time_slots
 DROP TABLE sessions;
 CREATE TABLE sessions
 (
-    session_id          INT PRIMARY KEY,
+    session_id          INTEGER PRIMARY KEY,
     session_name        VARCHAR(200)  NOT NULL,
     session_description VARCHAR(1024) NOT NULL,
-    session_length      INT           NOT NULL
+    session_length      INTEGER           NOT NULL
 );
 
 DROP TABLE session_schedule;
@@ -88,9 +88,10 @@ CREATE TABLE session_schedule
 DROP TABLE tags;
 CREATE TABLE tags
 (
-    tag_id      INT PRIMARY KEY,
+    tag_id      INTEGER PRIMARY KEY,
     description VARCHAR(30) NOT NULL
 );
+
 
 DROP TABLE session_tags;
 CREATE TABLE session_tags
