@@ -48,3 +48,19 @@ https://app.pluralsight.com/course-player?clipId=b7bc9b61-098a-4bcc-84db-bee5101
 # Spring Data: Repository + Query Generation
 - https://github.com/dlbunker/ps-spring-data-jpa
 - Spring Data Commons: Spring Data JPA, Spring JDBC, Spring Data KeyValue, Spring Data CouchBase, Spring Data Ne04j, Spring Data LDAP, Spring Data MongoDB, Spring Data Redis, Spring Data Hazelcast, Spring Data DynamoDB
+
+# Query DSL (Domain Specific Language = Method Contracts)
+- Query DSL is an extensive Java framework, which allows for the generation of type-safe queries in a syntax similar to SQL, it support various backends including JPA, JDO, SQL, Java collections, RDF, Lucene, Hibernate Search, and MongoDB
+
+- Query DSL can begin with: findBy, queryBy, readBy, countBy, getBy
+- Query DSL uses JPA attribute names for criteria, multiple criteria combined with [And, Or]
+
+# example query DSL:
+- findBySessionNameContains(String name)
+- select s from Session s where s.sessionName like :name
+- select * from Sessions s where s.session_name like ?
+
+- findBySessionLength || findBySessionLengthIs || findBySessionLengthEquals || findBySessionLengthNot 
+- where a.sessionLength = ?1  ||  where a.sessionLength != 1
+
+- findBySessionNameLike("Java%") || findBySessionNameNotLike("Java%")

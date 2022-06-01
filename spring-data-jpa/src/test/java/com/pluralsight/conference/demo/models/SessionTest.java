@@ -1,5 +1,6 @@
 package com.pluralsight.conference.demo.models;
 
+import com.pluralsight.conference.demo.repositories.ISessionRepository;
 import com.pluralsight.conference.demo.repositories.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,14 +16,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class SessionTest {
     @Autowired
-    private SessionRepository sessionRepository;
+    private SessionRepository repository;
+
+    @Autowired
+    private ISessionRepository iRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Test
     public void testFind() throws Exception {
-        Session session = sessionRepository.find(1L);
+        Session session = repository.find(1L);
 
         assertNotNull(session);
         assertEquals(1, session.getSessionId());
@@ -30,17 +34,29 @@ public class SessionTest {
 
     @Test
     public void testList() throws Exception {
-        List<Session> sessions = sessionRepository.list();
+        List<Session> sessions = repository.list();
 
         assertNotNull(sessions);
         assertTrue(sessions.size() > 0);
     }
 
-    /*@Test
+    @Test
     public void testSessionsThatHaveName() throws Exception {
         List<Session> sessions = repository.getSessionsThatHaveName("Java");
         assertTrue(sessions.size() > 0);
-    }*/
+    }
+
+    @Test
+    public void testDslQueryNot() throws Exception {
+        List<Session> sessions = iRepository.findBySessionLengthNot(45);
+        assertTrue(sessions.size() > 0);
+    }
+
+    @Test
+    public void testFindBySessionName() throws Exception {
+        List<Session> sessions = repository.findBySessionName("Java");
+        assertTrue(sessions.size() > 0);
+    }
 
     @Test
     @Transactional
@@ -49,13 +65,13 @@ public class SessionTest {
         s1.setSessionName("Meeting 2022");
         s1.setSessionDescription("Preparation Meeting in 2022");
         s1.setSessionLength(65);
-        s1 = sessionRepository.create(s1);
+        s1 = repository.create(s1);
 
         entityManager.clear();
 
-        Session s2 = sessionRepository.find(s1.getSessionId());
+        Session s2 = repository.find(s1.getSessionId());
         assertEquals("Meeting 2022", s2.getSessionName());
 
-        sessionRepository.delete(s2.getSessionId());
+        repository.delete(s2.getSessionId());
     }
 }

@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class SpeakerTest {
@@ -32,8 +33,25 @@ public class SpeakerTest {
     @Test
     public void testList() throws Exception {
         List<Speaker> speakers = repository.findAll();
+
         assertNotNull(speakers);
-        assert (speakers.size()) >= 1;
+        assert(speakers.size()) >= 1;
+    }
+
+    @Test
+    public void testDslQueryAnd() throws Exception {
+        List<Speaker> speakers = repository.findByFirstNameAndLastName("James", "King");
+
+        assertNotNull(speakers);
+        assert(speakers.size()) >= 1;
+    }
+
+    @Test
+    public void testDslQueryOr() throws Exception {
+        List<Speaker> speakers = repository.findByFirstNameOrLastName("James", "Duke");
+
+        assertNotNull(speakers);
+        assert(speakers.size()) >= 2;
     }
 
     @Test

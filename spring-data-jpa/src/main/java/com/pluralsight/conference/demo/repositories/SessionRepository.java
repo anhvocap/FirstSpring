@@ -41,4 +41,8 @@ public class SessionRepository {
                 .setParameter("name", "%" + name + "%").getResultList();
         return ses;
     }
+
+    public List<Session> findBySessionName(String name) {
+        return repository.findBySessionNameContains(name);
+    }
 }
