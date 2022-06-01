@@ -1,45 +1,38 @@
 package com.pluralsight.conference.demo.repositories;
 
 import com.pluralsight.conference.demo.models.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 @Repository
 public class SessionRepository {
+    @Autowired
+    private ISessionRepository repository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     public Session create(Session session) {
-        entityManager.persist(session);
-        entityManager.flush();
-        return session;
+        return repository.saveAndFlush(session);
     }
 
     public Session update(Session session) {
-        session = entityManager.merge(session);
-        entityManager.flush();
-        return session;
+        return repository.saveAndFlush(session);
     }
 
     public void delete(Long id) {
-        entityManager.remove(find(id));
-        entityManager.flush();
+        repository.deleteById(id);
     }
 
     public Session find(Long id) {
-        return entityManager.find(Session.class, id);
+        return repository.getOne(id);
     }
 
     public List<Session> list() {
-        List<Session> sessions = entityManager.createQuery("select s from Session s", Session.class).getResultList();
-        return sessions;
-    }
-
-    public List<Session> listByNativeQuery() {
-        return entityManager.createNativeQuery("SELECT * FROM Sessions").getResultList();
+        return repository.findAll();
     }
 
     public List<Session> getSessionsThatHaveName(String name) {

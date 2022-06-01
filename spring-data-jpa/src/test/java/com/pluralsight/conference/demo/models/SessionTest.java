@@ -1,6 +1,6 @@
 package com.pluralsight.conference.demo.models;
 
-import com.pluralsight.conference.demo.repositories.ISessionRepository;
+import com.pluralsight.conference.demo.repositories.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
@@ -15,14 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class SessionTest {
     @Autowired
-    private ISessionRepository sessionRepository;
+    private SessionRepository sessionRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Test
     public void testFind() throws Exception {
-        Session session = sessionRepository.getById(1L);
+        Session session = sessionRepository.find(1L);
 
         assertNotNull(session);
         assertEquals(1, session.getSessionId());
@@ -30,18 +30,11 @@ public class SessionTest {
 
     @Test
     public void testList() throws Exception {
-        List<Session> sessions = sessionRepository.findAll();
+        List<Session> sessions = sessionRepository.list();
 
         assertNotNull(sessions);
         assertTrue(sessions.size() > 0);
     }
-
-    /*@Test
-    public void testListByNativeQuery() throws Exception {
-        List<Session> sessions = sessionRepository.listByNativeQuery();
-
-        assertTrue(sessions.size() > 0);
-    }*/
 
     /*@Test
     public void testSessionsThatHaveName() throws Exception {
@@ -56,13 +49,13 @@ public class SessionTest {
         s1.setSessionName("Meeting 2022");
         s1.setSessionDescription("Preparation Meeting in 2022");
         s1.setSessionLength(65);
-        s1 = sessionRepository.saveAndFlush(s1);
+        s1 = sessionRepository.create(s1);
 
         entityManager.clear();
 
-        Session s2 = sessionRepository.getOne(s1.getSessionId());
+        Session s2 = sessionRepository.find(s1.getSessionId());
         assertEquals("Meeting 2022", s2.getSessionName());
 
-        sessionRepository.deleteById(s2.getSessionId());
+        sessionRepository.delete(s2.getSessionId());
     }
 }

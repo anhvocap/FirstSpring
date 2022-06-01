@@ -1,7 +1,7 @@
 package com.pluralsight.conference.demo.models;
 
+import com.pluralsight.conference.demo.repositories.ITicketPriceRepository;
 import com.pluralsight.conference.demo.repositories.PricingCategoryRepository;
-import com.pluralsight.conference.demo.repositories.TicketPriceRepository;
 import com.pluralsight.conference.demo.repositories.TicketTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 public class TicketPriceTest {
     @Autowired
-    private TicketPriceRepository repository;
+    private ITicketPriceRepository tpRepository;
 
     @Autowired
     private PricingCategoryRepository pcRepository;
@@ -33,7 +32,7 @@ public class TicketPriceTest {
 
     @Test
     public void testFind() throws Exception {
-        TicketPrice ticket = repository.find(1L);
+        TicketPrice ticket = tpRepository.getById(1L);
         assertNotNull(ticket);
     }
 
@@ -47,15 +46,15 @@ public class TicketPriceTest {
 
         tp.setTicketType(ttRepository.find("C"));
 
-        tp = repository.create(tp);
+        tp = tpRepository.saveAndFlush(tp);
 
         // clear the persistence context so we don't return the previously cached location object
         // this is a test only thing and normally doesn't need to be done in prod code
         entityManager.clear();
 
-        TicketPrice otherTp = repository.find(tp.getTicketPriceId());
-        assertEquals(BigDecimal.valueOf(200, 2), otherTp.getBasePrice());
+        TicketPrice otherTp = tpRepository.getById(tp.getTicketPriceId());
+        assertEquals(BigDecimal.valueOf(200, 2).floatValue(), otherTp.getBasePrice().floatValue());
 
-        repository.delete(otherTp.getTicketPriceId());
+        tpRepository.deleteById(otherTp.getTicketPriceId());
     }
 }
