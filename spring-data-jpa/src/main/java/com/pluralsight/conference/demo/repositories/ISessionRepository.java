@@ -8,9 +8,11 @@ import java.util.List;
 public interface ISessionRepository extends JpaRepository<Session, Long> {
     List<Session> findBySessionNameContains(String name);
 
+    List<Session> findBySessionLengthNot(Integer length);
+
+    List<Session> findBySessionNameNotLike(String name);
+
     Session findFirstBySessionNameContains(String name);
 
     Long countBySessionNameContains(String name);
-
-    List<Session> findBySessionLengthNot(Integer sessionLength);
 }

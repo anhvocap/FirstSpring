@@ -59,6 +59,15 @@ public class SessionTest {
     }
 
     @Test
+    public void testJpaNotLike() throws Exception {
+        List<Session> sessions = iRepository.findBySessionNameNotLike("Java");
+        assertTrue(sessions.size() > 0);
+
+        Session s1 = sessions.get(0);
+        assert (s1.getSessionName().toLowerCase().lastIndexOf("Java")) < 0; // not have java
+    }
+
+    @Test
     @Transactional
     public void testSaveAndGetAndDelete() throws Exception {
         Session s1 = new Session();
