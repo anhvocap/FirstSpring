@@ -4,7 +4,8 @@
 
 # Plural Sight
 - Create First Spring Boot Application: 
-https://app.pluralsight.com/course-player?clipId=b7bc9b61-098a-4bcc-84db-bee51013d9a2
+- https://app.pluralsight.com/course-player?clipId=b7bc9b61-098a-4bcc-84db-bee51013d9a2
+- https://github.com/dlbunker/ps-first-spring-boot-app
 
 # Spring Boot config and environment
 - External Sources: command line parameters, JNDI, OS environment variables
@@ -34,8 +35,10 @@ https://app.pluralsight.com/course-player?clipId=b7bc9b61-098a-4bcc-84db-bee5101
 - aws
 - ms azure
 
-# Spring Framework: Overview of Spring Data
-- https://github.com/dlbunker/ps-first-spring-boot-app
+# Plural Sight
+- Spring Framework: Overview of Spring Data
+- https://app.pluralsight.com/library/courses/spring-data-jpa-getting-started/table-of-contents
+- https://github.com/dlbunker/ps-spring-boot-app
 - Main modules: JPA, JDBC, MongoDB, Cassandra, Spring Data n
 - Community modules: CouchBase, ElasticSearch, Hazelcast, Neo4j, Spring Data n
 
