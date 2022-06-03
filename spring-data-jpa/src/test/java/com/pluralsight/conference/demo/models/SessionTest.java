@@ -53,18 +53,27 @@ public class SessionTest {
     }
 
     @Test
-    public void testFindBySessionName() throws Exception {
-        List<Session> sessions = repository.findBySessionName("Java");
-        assertTrue(sessions.size() > 0);
-    }
-
-    @Test
-    public void testJpaNotLike() throws Exception {
+    public void testDslQueryNotLike() throws Exception {
         List<Session> sessions = iRepository.findBySessionNameNotLike("Java");
         assertTrue(sessions.size() > 0);
 
         Session s1 = sessions.get(0);
         assert (s1.getSessionName().toLowerCase().lastIndexOf("Java")) < 0; // not have java
+    }
+
+    @Test
+    public void testDslQueryLessThan() throws Exception {
+        List<Session> sessions = iRepository.findBySessionLengthLessThanEqual(30);
+        assertTrue(sessions.size() > 0);
+
+        Session s1 = sessions.get(0);
+        assert (s1.getSessionLength()) <= 30;
+    }
+
+    @Test
+    public void testFindBySessionName() throws Exception {
+        List<Session> sessions = repository.findBySessionName("Java");
+        assertTrue(sessions.size() > 0);
     }
 
     @Test

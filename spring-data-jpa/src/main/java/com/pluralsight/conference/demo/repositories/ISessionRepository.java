@@ -7,12 +7,10 @@ import java.util.List;
 
 public interface ISessionRepository extends JpaRepository<Session, Long> {
     List<Session> findBySessionNameContains(String name);
-
     List<Session> findBySessionLengthNot(Integer length);
-
     List<Session> findBySessionNameNotLike(String name);
+    List<Session> findBySessionLengthLessThanEqual(Integer length);
 
     Session findFirstBySessionNameContains(String name);
-
     Long countBySessionNameContains(String name);
 }

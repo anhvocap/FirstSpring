@@ -12,9 +12,9 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class TicketPriceTest {
@@ -56,5 +56,12 @@ public class TicketPriceTest {
         assertEquals(BigDecimal.valueOf(200, 2).floatValue(), otherTp.getBasePrice().floatValue());
 
         tpRepository.deleteById(otherTp.getTicketPriceId());
+    }
+
+    @Test
+    public void testQueryAnnotation() throws Exception {
+        //List<TicketPrice> tickets = tpRepository.getTicketsUnderPriceWithWorkshops(BigDecimal.valueOf(1000));
+        List<TicketPrice> tickets = tpRepository.findAll();
+        assertTrue(tickets.stream().count()>0);
     }
 }

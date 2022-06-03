@@ -4,15 +4,15 @@ import com.pluralsight.conference.demo.repositories.ISpeakerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class SpeakerTest {
@@ -52,6 +52,64 @@ public class SpeakerTest {
 
         assertNotNull(speakers);
         assert(speakers.size()) >= 2;
+    }
+
+    @Test
+    public void testDslQueryIsNull() throws Exception {
+        List<Speaker> speakers = repository.findBySpeakerPhotoIsNull();
+
+        assertNotNull(speakers);
+        assert(speakers.size()) > 0;
+    }
+
+    @Test
+    public void testDslQueryIn() throws Exception {
+        List<String> companies = new ArrayList<>();
+        companies.add("MicroOcean Software");
+        companies.add("Contoso");
+        companies.add("Adventureworks");
+        List<Speaker> speakers = repository.findByCompanyIn(companies);
+
+        assertNotNull(speakers);
+        assertTrue(speakers.size() > 0);
+    }
+
+    @Test
+    public void testDslQueryIgnoreCase() throws Exception {
+        List<Speaker> speakers = repository.findByCompanyIgnoreCase("national bank");
+
+        assertNotNull(speakers);
+        assert(speakers.size()) > 0;
+        assert(speakers.get(0).getCompany().equals("National Bank"));
+    }
+
+    @Test
+    public void testDslQueryOrderByAsc() throws Exception {
+        List<Speaker> speakers = repository.findByLastNameOrderByFirstNameAsc("Becker");
+
+        assertNotNull(speakers);
+        assert(speakers.size()) > 0;
+    }
+
+    @Test
+    public void testDslQueryOrderByDesc() throws Exception {
+        List<Speaker> speakers = repository.findByLastNameOrderByFirstNameDesc("Becker");
+
+        assertNotNull(speakers);
+        assert(speakers.size()) > 0;
+    }
+
+    @Test
+    public void testDslQueryTop5() throws Exception {
+        List<Speaker> speakers = repository.findByFirstNameOrderByFirstNameAsc("James").subList(0, 5);
+
+        assertNotNull(speakers);
+        assert(speakers.size()) == 5;
+        assertTrue(speakers.get(0).getFirstName().equals("James"));
+        assertTrue(speakers.get(1).getFirstName().equals("James"));
+        assertTrue(speakers.get(2).getFirstName().equals("James"));
+        assertTrue(speakers.get(3).getFirstName().equals("James"));
+        assertTrue(speakers.get(4).getFirstName().equals("James"));
     }
 
     @Test

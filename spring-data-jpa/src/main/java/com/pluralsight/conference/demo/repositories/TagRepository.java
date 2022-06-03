@@ -17,8 +17,7 @@ public class TagRepository {
     }
 
     public List<Tag> list() {
-        List<Tag> tags = entityManager.createQuery("from Tag").getResultList();
-        //List<Tag> tags = entityManager.createNativeQuery("select t.* from Tag t").getResultList();
+        List<Tag> tags = entityManager.createNativeQuery("select t.* from Tag t").getResultList();
         return tags;
     }
 }

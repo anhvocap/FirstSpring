@@ -63,7 +63,45 @@
 - select s from Session s where s.sessionName like :name
 - select * from Sessions s where s.session_name like ?
 
-- findBySessionLength || findBySessionLengthIs || findBySessionLengthEquals || findBySessionLengthNot 
-- where a.sessionLength = ?1  ||  where a.sessionLength != 1
+- Keyword: And, Or
+- findByFirstNameAndLastName  ||  findByFirstNameOrLastName
 
+- Keyword: Equals, Is, Not
+- findBySessionLength || findBySessionLengthIs || findBySessionLengthEquals || findBySessionLengthNot 
+
+- Keyword: Like, Not Like
 - findBySessionNameLike("Java%") || findBySessionNameNotLike("Java%")
+
+- Keyword: StartingWith, EndingWith
+- other variations: StartsWith, EndsWith, Contains, IsStartingWith, IsEndingWith, IsContaining, NotContaining, NotContains
+- findBySessionNameStartingWith("a")  ||  findBySessionNameEndingWith("a")  ||  findBySessionNameContaining("a")
+
+- Keyword: LessThan(Equal), GreaterThan(Equal)
+- findBySessionLengthLessThan(30) || findBySessionLengthLessThanEqual(30)  
+- findBySessionLengthGreaterThan(30) || findBySessionLengthGreaterThanEqual(30)
+
+- Keyword: Before, After, Between
+- findByStartDateBefore(startDate)  ||  findByStartDateAfter(startDate)  ||  findByStartDateBetween(startDate, endDate)
+
+- Keyword: True, False
+- findByIncludeWorkshopTrue  ||  findByIncludeWorkshopFalse
+
+- Keyword: IsNull, IsNotNull, NotNull
+- findBySpeakerPhotoNull() || findBySpeakerPhotoIsNull() || findBySpeakerPhotoNotNull() || findBySpeakerPhotoIsNotNull()
+
+- Keyword: In, NotIn
+- findByCompanyIn(companies) || findByCompanyNotIn(companies)
+
+- Keyword: IgnoreCase
+- findByCompanyIgnoreCase(comp) || findByCompanyContainsIgnoreCase(comp)
+- where UPPER(a.company) = UPPER(%?%) || where UPPER(a.company) = UPPER(%?1%)
+
+- Keyword: OrderBy
+- findByLastNameOrderByFirstNameAsc(name)  || findByLastNameOrderByFirstNameDesc(name)
+- WHERE a.lastName = ? ORDER BY a.firstName ASC  ||  WHERE a.lastName = ? ORDER BY a.firstName DESC
+
+- Keyword: First, Top, Distinct
+- findFirstByFirstName(name) || findTop5ByFirstName(name) || findDistinctByFirstName(name)
+- where firstName = ? LIMIT 5  || SELECT DISTINCT FROM table WHERE firstName = ?
+
+- Keyword: @Query annotation
