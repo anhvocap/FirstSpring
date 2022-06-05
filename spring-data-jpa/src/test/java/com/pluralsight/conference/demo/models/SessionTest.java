@@ -1,10 +1,14 @@
 package com.pluralsight.conference.demo.models;
 
+import com.pluralsight.conference.demo.repositories.ICustomRepository;
 import com.pluralsight.conference.demo.repositories.ISessionRepository;
 import com.pluralsight.conference.demo.repositories.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -77,6 +81,30 @@ public class SessionTest {
     }
 
     @Test
+    public void testQuerySessionsWithName() throws Exception {
+        List<Session> sessions = iRepository.querySessionsWithName("Java");
+        assertTrue(sessions.size() > 0);
+        assertTrue(sessions.get(0).getSessionName().contains("Java"));
+    }
+
+    @Test
+    public void testQuerySessionsWithNamePaging() throws Exception {
+        /* query condition: OFFSET 5 ROWS FETCH NEXT 10 ROWS ONLY
+        *  it only runs on Oracle 12
+        * */
+        //Page<Session> page = iRepository.querySessionsWithNamePaging("n", PageRequest.of(1, 5, Sort.by(Sort.Direction.DESC, "sessionLength")));
+
+        List<Session> sessions = iRepository.querySessionsWithName("n");
+        assertTrue(sessions.size() > 0);
+    }
+
+    @Test
+    public void testQueryCustomSessions() throws Exception {
+        List<Session> list = iRepository.customQuerySessions();
+        assertTrue(list.size() > 0);
+    }
+
+    @Test
     @Transactional
     public void testSaveAndGetAndDelete() throws Exception {
         Session s1 = new Session();
@@ -91,5 +119,16 @@ public class SessionTest {
         assertEquals("Meeting 2022", s2.getSessionName());
 
         repository.delete(s2.getSessionId());
+    }
+
+    @Test
+    public void testUpdateDslQuery() throws Exception {
+        iRepository.updateSessionName((long) 2,"Meeting 2022-06-01", "Meeting for AngularJs");
+
+        List<Session> sessionList = iRepository.findBySessionNameContains("Meeting 2022-06-01");
+        assertNotNull(sessionList);
+        assert (sessionList.size() > 0);
+        assert (sessionList.get(0).getSessionName().equals("Meeting 2022-06-01"));
+        assert (sessionList.get(0).getSessionDescription().equals("Meeting for AngularJs"));
     }
 }

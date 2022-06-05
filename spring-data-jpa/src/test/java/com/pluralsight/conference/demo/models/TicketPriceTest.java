@@ -3,6 +3,7 @@ package com.pluralsight.conference.demo.models;
 import com.pluralsight.conference.demo.repositories.ITicketPriceRepository;
 import com.pluralsight.conference.demo.repositories.PricingCategoryRepository;
 import com.pluralsight.conference.demo.repositories.TicketTypeRepository;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,9 +32,17 @@ public class TicketPriceTest {
     private EntityManager entityManager;
 
     @Test
+    public void testFindAll() throws Exception {
+        List<TicketPrice> tickets = tpRepository.findAll();
+        assertNotNull(tickets);
+        assertTrue(tickets.stream().count() > 0);
+    }
+
+    @Test
     public void testFind() throws Exception {
         TicketPrice ticket = tpRepository.getById(1L);
         assertNotNull(ticket);
+        assertEquals(1, ticket.getTicketPriceId());
     }
 
     @Test
@@ -60,8 +69,47 @@ public class TicketPriceTest {
 
     @Test
     public void testQueryAnnotation() throws Exception {
-        //List<TicketPrice> tickets = tpRepository.getTicketsUnderPriceWithWorkshops(BigDecimal.valueOf(1000));
-        List<TicketPrice> tickets = tpRepository.findAll();
+        List<TicketPrice> tickets = tpRepository.findTicketByBasePrice(BigDecimal.valueOf(500));
         assertTrue(tickets.stream().count()>0);
+        assertEquals((float)500, tickets.get(0).getBasePrice().floatValue());
+    }
+
+    @Test
+    public void testQueryAnnotationWithWorkshop() throws Exception {
+        List<TicketPrice> tickets = tpRepository.findTicketUnderBasePriceWithWorkshops(BigDecimal.valueOf(1000));
+        assertTrue(tickets.stream().count()>0);
+
+        assertTrue(tickets.get(0).getBasePrice().floatValue() < 1000);
+        assertTrue(tickets.get(0).getTicketType().getIncludesWorkshop().equals(true));
+    }
+
+    @Test
+    public void testQueryAnnotationByRelationship() throws Exception {
+        List<TicketPrice> tickets = tpRepository.queryTicketRelationship(BigDecimal.valueOf(1000));
+        assertTrue(tickets.stream().count()>0);
+
+        assertTrue(tickets.get(0).getBasePrice().floatValue() < 1000);
+        assertTrue(tickets.get(0).getTicketType().getIncludesWorkshop().equals(true));
+    }
+
+    @Test
+    public void testQueryAnnotationByCategoryCode() throws Exception {
+        List<TicketPrice> tickets = tpRepository.queryTicketWithCategoryCode("E");
+        assertTrue(tickets.stream().count()>0);
+        assertEquals("E", tickets.get(0).getPricingCategory().getPricingCategoryCode());
+    }
+
+    @Test
+    public void namedFindTicketsByPricingCategoryName() throws Exception {
+        List<TicketPrice> tickets = tpRepository.namedFindTicketsByPricingCategoryName("Regular");
+        assertTrue(tickets.stream().count()>0);
+        assertEquals("Regular", tickets.get(0).getPricingCategory().getPricingCategoryName());
+    }
+
+    @Test
+    public void nativeFindTicketsByCategoryWithWorkshop() throws Exception {
+        List<TicketPrice> tickets = tpRepository.nativeFindTicketsByCategoryWithWorkshop("Regular");
+        assertTrue(tickets.stream().count()>0);
+        assertEquals("Regular", tickets.get(0).getPricingCategory().getPricingCategoryName());
     }
 }

@@ -104,4 +104,8 @@
 - findFirstByFirstName(name) || findTop5ByFirstName(name) || findDistinctByFirstName(name)
 - where firstName = ? LIMIT 5  || SELECT DISTINCT FROM table WHERE firstName = ?
 
-- Keyword: @Query annotation
+- Keyword: @Query annotation for run: SQL or JPQL
+- @Query(value = "select tp from TicketPrice tp where tp.basePrice = ?1")
+- @Query(value = "select * from ticket_prices where pricing_category_code = ?1", nativeQuery = true)
+
+- Audit annotations:  @CreatedBy  @LastModifiedBy  @CreatedDate  @LastModifiedDate
