@@ -1,14 +1,10 @@
 package com.pluralsight.conference.demo.models;
 
-import com.pluralsight.conference.demo.repositories.ICustomRepository;
 import com.pluralsight.conference.demo.repositories.ISessionRepository;
 import com.pluralsight.conference.demo.repositories.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,7 +26,7 @@ public class SessionTest {
 
     @Test
     public void testFind() throws Exception {
-        Session session = repository.find(1L);
+        Session session = iRepository.getOne((long)1);
 
         assertNotNull(session);
         assertEquals(1, session.getSessionId());
@@ -98,11 +94,11 @@ public class SessionTest {
         assertTrue(sessions.size() > 0);
     }
 
-    @Test
-    public void testQueryCustomSessions() throws Exception {
-        List<Session> list = iRepository.customQuerySessions();
-        assertTrue(list.size() > 0);
-    }
+    //@Test
+    //public void testQueryCustomSessions() throws Exception {
+    //    List<Session> list = iRepository.customQuerySessions();
+    //    assertTrue(list.size() > 0);
+    //}
 
     @Test
     @Transactional

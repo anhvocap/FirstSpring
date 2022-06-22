@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface ISessionRepository extends JpaRepository<Session, Long>, ICustomRepository {
+public interface ISessionRepository extends JpaRepository<Session, Long> {
     List<Session> findBySessionNameContains(String name);
     List<Session> findBySessionLengthNot(Integer length);
     List<Session> findBySessionNameNotLike(String name);
