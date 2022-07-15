@@ -1,5 +1,5 @@
 # app settings
-server.port=8082
+server.port=8083
 app.version=1.0.1
 db.username=indexdb
 db.password=indexdb
@@ -19,4 +19,3 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.Oracle12cDialect
 # logging
 logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
 logging.level.org.hibernate.SQL=debug
-

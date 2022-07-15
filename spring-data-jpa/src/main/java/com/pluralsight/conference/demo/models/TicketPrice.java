@@ -14,7 +14,7 @@ import java.math.BigDecimal;
         query = "select tp.* from ticket_prices tp " +
                 "left join ticket_types tt on tp.ticket_type_code = tt.ticket_type_code " +
                 "left join pricing_categories pc on tp.pricing_category_code = pc.pricing_category_code " +
-                "where tt.includes_workshop = true and pc.pricing_category_name = :name",
+                "where tt.includes_workshop = 1 and pc.pricing_category_name = :name",
         resultClass = TicketPrice.class
 )
 public class TicketPrice {
@@ -65,7 +65,5 @@ public class TicketPrice {
         return pricingCategory;
     }
 
-    public void setPricingCategory(PricingCategory pricingCategory) {
-        this.pricingCategory = pricingCategory;
-    }
+    public void setPricingCategory(PricingCategory pricingCategory) { this.pricingCategory = pricingCategory; }
 }

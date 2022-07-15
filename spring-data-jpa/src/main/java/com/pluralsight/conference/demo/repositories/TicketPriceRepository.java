@@ -1,5 +1,6 @@
 package com.pluralsight.conference.demo.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.pluralsight.conference.demo.models.*;
 import javax.persistence.*;
@@ -7,6 +8,9 @@ import java.util.List;
 
 @Repository
 public class TicketPriceRepository {
+    @Autowired
+    private ITicketTypeRepository repository;
+
     @PersistenceContext
     private EntityManager entityManager;
 

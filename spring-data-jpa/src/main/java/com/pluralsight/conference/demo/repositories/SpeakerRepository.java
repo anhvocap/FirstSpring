@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import com.pluralsight.conference.demo.models.Speaker;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -29,11 +30,17 @@ public class SpeakerRepository {
     }
 
     public Speaker find(Long id) {
-        System.out.println("id:" + id);
         return entityManager.find(Speaker.class, id);
     }
 
     public List<Speaker> list() {
-        return entityManager.createNativeQuery("SELECT s.* from Speakers s").getResultList();
+        Query query = entityManager.createQuery("select s from Speaker s", Speaker.class);
+        System.out.println("query:" + query);
+        List<Speaker> result = query.getResultList();
+        return result;
+    }
+
+    public List<Speaker> listByNativeQuery() {
+        return entityManager.createNativeQuery("SELECT s.* FROM Speakers s").getResultList();
     }
 }
